@@ -1,46 +1,35 @@
- class PrintEditionItem {
+class PrintEditionItem {
 
-    constructor (name, releaseDate, pagesCount ) {
-
-
-    this.name = name ;
-       this.releaseDate = releaseDate;
-       this.pagesCount = pagesCount;
-       this.state = 100;
-       this.type = null; 
+    constructor(name, releaseDate, pagesCount) {
+        this.name = name;
+        this.releaseDate = releaseDate;
+        this.pagesCount = pagesCount;
+        this.state = 100;
+        this.type = null;
 
 
 
     }
 
+    set state(value) {
+        if (value < 0) {
+            this._state = 0;
+        } else if (value > 100) {
+            this._state = 100
+        } else {
+            this._state = value;
+        }
 
-
-    set state (value) {
-            if(value < 0) {
-                this._state = 0;
-            } else if (value > 100) {
-                this._state = 100
-            } else {
-                this._state = value;
-            }
-        
-
-
-        
     }
 
-    get state () {
+    get state() {
         return this._state;
 
     }
 
-
-
-
-
     fix() {
-        this.state *=1.5;
-    } 
+        this.state *= 1.5;
+    }
 
 
 
@@ -48,26 +37,26 @@
 
 
 
-class Magazine extends PrintEditionItem  {
+class Magazine extends PrintEditionItem {
 
-    constructor (name, releaseDate, pagesCount){
-    super(name, releaseDate, pagesCount);
-    this.type = 'magazine'
+    constructor(name, releaseDate, pagesCount) {
+        super(name, releaseDate, pagesCount);
+        this.type = 'magazine'
     }
 }
 
 
 
-class Book extends PrintEditionItem  {
+class Book extends PrintEditionItem {
 
-    constructor (author, name, releaseDate, pagesCount){
-    super(name, releaseDate, pagesCount);
-    this.author = author;
-    this.type = 'book'
+    constructor(author, name, releaseDate, pagesCount) {
+        super(name, releaseDate, pagesCount);
+        this.author = author;
+        this.type = 'book'
     }
 }
 
-class NovelBook  extends Book {
+class NovelBook extends Book {
 
     constructor(author, name, releaseDate, pagesCount) {
         super(author, name, releaseDate, pagesCount);
@@ -83,7 +72,7 @@ class FantasticBook extends Book {
     constructor(author, name, releaseDate, pagesCount) {
         super(author, name, releaseDate, pagesCount);
         this.type = "fantastic";
-    
+
 
     }
 
@@ -96,40 +85,25 @@ class DetectiveBook extends Book {
     constructor(author, name, releaseDate, pagesCount) {
         super(author, name, releaseDate, pagesCount);
         this.type = "detective";
-    
 
 
-
-}
+    }
 }
 
 
+class Library {
 
 
-
-
-
-
-
-
-
-
-
-class  Library {
-
-  
     constructor(name, books) {
-    this.name = name;
-    this.books = [];
+        this.name = name;
+        this.books = [];
 
     }
 
-
-
-    addBook (book) {
+    addBook(book) {
         if (book.state > 30) {
 
-          this.books.push(book);
+            this.books.push(book);
 
 
 
@@ -137,9 +111,10 @@ class  Library {
         }
     }
 
+
     findBookBy(type, value) {
-         
-        let book = this.books.find((book) => book[type] === value ); 
+
+        let book = this.books.find((book) => book[type] === value);
         if (book) {
             return book;
         }
@@ -154,146 +129,75 @@ class  Library {
     giveBookByName(bookName) {
         let index = this.books.findIndex((book) => book.name === bookName);
         if (index !== -1) {
-          let [book] = this.books.splice(index, 1);
-          return book;
+            let [book] = this.books.splice(index, 1);
+            return book;
         }
         return null;
-      }
-    
     }
 
+}
 
 
+const library = new Library("Библиотека имени Ленина");
 
 
+library.addBook(
 
 
+    new FantasticBook(
+        'Фрэнк Герберт',
+        "Дюна",
+        1965,
+        1000
 
+    )
 
 
+)
 
 
 
+library.addBook(
 
 
+    new FantasticBook(
+        'Филипп Дик',
+        "Дюна",
+        1966,
+        1500
 
+    )
 
+)
 
 
+library.addBook(
 
 
+    new DetectiveBook(
+        'Агата Кристи',
+        "10 Негритят",
+        1939,
+        256
 
+    )
 
+)
 
 
 
 
-     const library = new Library("Библиотека имени Ленина");
 
 
-     library.addBook (
 
 
-        new FantasticBook (
-            'Фрэнк Герберт',
-            "Дюна",
-            1965,
-            1000
+console.log("Количество книг до выдачи: " + library.books.length)
 
-        )
+console.log(library.findBookBy("releaseDate", 1939).name);
 
 
 
-
-
-
-        
-
-
-
-     )
-
-    
-
-
-     library.addBook (
-
-
-        new FantasticBook (
-            'Филипп Дик',
-            "Дюна",
-            1966,
-            1500
-
-        )
-
-
-
-
-
-
-        
-
-
-
-     )
-
-
-
-
-     library.addBook (
-
-
-        new DetectiveBook (
-            'Агата Кристи',
-            "10 Негритят",
-            1939,
-            256
-
-        )
-
-
-
-
-
-
-        
-
-
-
-     )
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-     console.log("Количество книг до выдачи: " + library.books.length)
-
-
-
-
-     console.log(library.findBookBy("releaseDate", 1939).name); 
-
-
-
-
-
-
-
-
-
-
-/*     library.addBook(
+/*   library.addBook(
      new DetectiveBook(
        "Артур Конан Дойл",
        "Полное собрание повестей и рассказов о Шерлоке Холмсе в одном томе",
@@ -319,10 +223,4 @@ class  Library {
     library.giveBookByName("Машина времени");
     console.log("Количество книг после выдачи: " + library.books.length); //Количество книг после выдачи: 3
 
-
-
-
-
-
-
- */
+ */ 
